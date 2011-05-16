@@ -1,6 +1,6 @@
 import os
 import sys
-os.environ['DJANGO_SETTINGS_MODULE'] = 'ffstream.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 import django.core.handlers.wsgi
 djangoapplication = django.core.handlers.wsgi.WSGIHandler()
 def application(environ, start_response):
