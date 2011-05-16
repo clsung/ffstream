@@ -24,13 +24,16 @@ def get_user_id(nickname):
 def friendship(req):
     form = forms.input_form()
     is_f = False
+    userA = ''
+    userB = ''
     if req.method == 'POST':
         form = forms.input_form(req.POST)
         if form.is_valid():
             is_f = are_friends(form.cleaned_data['userA'],
             form.cleaned_data['userB'])
+            userA = form.cleaned_data['userA']
+            userB = form.cleaned_data['userB']
         
     return render_to_response('friendship.html',
             RequestContext(req,{ 'form': form, 'is_f': is_f,
-                'userA': form.cleaned_data['userA'],
-                'userB': form.cleaned_data['userB'], }))
+                'userA': userA, 'userB': userB, }))
