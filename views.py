@@ -23,6 +23,7 @@ def get_user_id(nickname):
 
 def friendship(req):
     form = forms.input_form()
+    is_f = False
     if req.method == 'POST':
         form = forms.input_form(req.POST)
         if form.is_valid():
