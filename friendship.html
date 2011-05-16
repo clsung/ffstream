@@ -1,0 +1,14 @@
+<html><body>
+
+	<a href="http://plurk.com/{{fol.1}}">@{{fol.1}}</a> and <a href="http://plurk.com/{{fol.2}}">@{{fol.2}}</a>  are{% ifequal is.friend "No" %} not {% endifequal %} friends.
+
+<form action="." method="POST">{% csrf_token %}
+    <input type="hidden" name="old" value="{{ form_data }}">
+    {{ form.userA.errors }}
+	{{ form.userB.errors }}
+    Is {{ form.userA }} friend of {{ form.userB }} 
+    <input type="submit" align="center" value="Check out!" /> 
+</form>
+
+</body></html> 
+
