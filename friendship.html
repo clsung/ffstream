@@ -1,12 +1,12 @@
 <html><body>
 
-	<a href="http://plurk.com/{{fol.1}}">@{{fol.1}}</a> and <a href="http://plurk.com/{{fol.2}}">@{{fol.2}}</a>  are{% ifequal is.friend "No" %} not {% endifequal %} friends.
+	<a href="http://plurk.com/m/u/{{userA}}">@{{userA}}</a> and <a href="http://plurk.com/m/u/{{userB}}">@{{userB}}</a> are{% if not is_f %} not {% endif %} friends.
 
 <form action="." method="POST">{% csrf_token %}
-    <input type="hidden" name="old" value="{{ form_data }}">
     {{ form.userA.errors }}
 	{{ form.userB.errors }}
-    Is {{ form.userA }} friend of {{ form.userB }} 
+    Is {{ form.userA }} a friend of {{ form.userB }} ?
+    <input type="hidden" name="old" value="{{ form_data }}">
     <input type="submit" align="center" value="Check out!" /> 
 </form>
 

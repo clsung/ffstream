@@ -1,15 +1,35 @@
-from django.utils import simplejson
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 import forms
 import settings
+import json
+import plurk
 
-def is_friends(userA, userB):
+def are_friends(userA, userB):
+    url = '/FriendsFans/getFriendsByOffset'
+    uid_A = get_user_id(userA)
+    uid_B = get_user_id(userB)
+    friends = json.loads(plurk.callAPI(url,user_id=uid_A,limit=5000).read())
+    for friend in friends:
+        if uid_B == friend['uid']:
+            return True
     return False
+
+def get_user_id(nickname):
+    result = json.loads(plurk.callAPI('/Profile/getPublicProfile',
+        user_id=nickname).read())
+    return result['user_info']['uid']
+
 
 def friendship(req):
     form = forms.input_form()
     if req.method == 'POST':
         form = forms.input_form(req.POST)
+        if form.is_valid():
+            is_f = are_friends(form.cleaned_data['userA'],
+            form.cleaned_data['userB'])
+        
     return render_to_response('friendship.html',
-            RequestContext(req,form))
+            RequestContext(req,{ 'form': form, 'is_f': is_f,
+                'userA': form.cleaned_data['userA'],
+                'userB': form.cleaned_data['userB'], }))
