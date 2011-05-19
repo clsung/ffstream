@@ -9,7 +9,10 @@ def are_friends(userA, userB):
     url = '/FriendsFans/getFriendsByOffset'
     uid_A = get_user_id(userA)
     uid_B = get_user_id(userB)
-    friends = json.loads(plurk.callAPI(url,user_id=uid_A,limit=5000).read())
+    if uid_A and uid_B:
+        friends = json.loads(plurk.callAPI(url,user_id=uid_A,limit=5000).read())
+    else:
+        return False
     for friend in friends:
         if uid_B == friend['uid']:
             return True
@@ -18,7 +21,10 @@ def are_friends(userA, userB):
 def get_user_id(nickname):
     result = json.loads(plurk.callAPI('/Profile/getPublicProfile',
         user_id=nickname).read())
-    return result['user_info']['uid']
+    if 'user_info' in result.keys():
+        return result['user_info']['uid']
+    else:
+        return False
 
 
 def friendship(req):
